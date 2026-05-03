@@ -1,0 +1,214 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum ProductCategory {
+  CPU
+  GPU
+  MOTHERBOARD
+  RAM
+  SSD
+}
+
+enum ProductCondition {
+  NEW
+  LIKE_NEW
+  USED
+  FOR_PARTS
+}
+
+enum UserRole {
+  USER
+  ADMIN
+}
+
+enum ReportTargetType {
+  PRODUCT
+  CONVERSATION
+  MESSAGE
+  USER
+}
+
+enum ReportStatus {
+  OPEN
+  RESOLVED
+}
+
+model User {
+  id           String    @id @default(cuid())
+  email        String    @unique
+  passwordHash String
+  name         String?
+  role         UserRole  @default(USER)
+  createdAt    DateTime  @default(now())
+  orders       Order[]
+  products     Product[]
+  sales        Order[]   @relation("orderSeller")
+
+  conversationsAsBuyer  Conversation[] @relation("buyer")
+  conversationsAsSeller Conversation[] @relation("seller")
+  messages              Message[]
+
+  reviewsWritten  Review[] @relation("reviewsWritten")
+  reviewsReceived Review[] @relation("reviewsReceived")
+  reports         Report[] @relation("reportsReporter")
+
+  conversationReads ConversationRead[]
+}
+
+model Product {
+  id          String           @id @default(cuid())
+  name        String
+  description String
+  category    ProductCategory
+  priceRub    Int
+  imageUrl    String
+  imageUrls   String[]         @default([])
+  specs       Json
+  stock       Int              @default(0)
+  condition   ProductCondition @default(USED)
+  city        String?
+  isHidden    Boolean          @default(false)
+  viewCount   Int              @default(0)
+  sellerId    String?
+  seller      User?            @relation(fields: [sellerId], references: [id], onDelete: SetNull)
+  createdAt   DateTime         @default(now())
+  updatedAt   DateTime         @updatedAt
+
+  orderItems OrderItem[]
+
+  conversations Conversation[]
+
+  @@index([category])
+  @@index([priceRub])
+  @@index([name])
+  @@index([sellerId])
+}
+
+model Conversation {
+  id        String   @id @default(cuid())
+  productId String
+  product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  buyerId   String
+  buyer     User     @relation("buyer", fields: [buyerId], references: [id], onDelete: Cascade)
+
+  sellerId  String
+  seller    User     @relation("seller", fields: [sellerId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  messages  Message[]
+  reads     ConversationRead[]
+
+  @@unique([productId, buyerId])
+  @@index([buyerId])
+  @@index([sellerId])
+  @@index([updatedAt])
+}
+
+model Message {
+  id             String       @id @default(cuid())
+  conversationId String
+  conversation   Conversation @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+  senderId       String
+  sender         User         @relation(fields: [senderId], references: [id], onDelete: Cascade)
+  text           String
+  createdAt      DateTime     @default(now())
+
+  @@index([conversationId, createdAt])
+}
+
+model Order {
+  id            String      @id @default(cuid())
+  userId        String
+  user          User        @relation(fields: [userId], references: [id])
+  sellerId      String?
+  seller        User?       @relation("orderSeller", fields: [sellerId], references: [id], onDelete: SetNull)
+  customerName  String
+  phone         String
+  address       String
+  totalRub      Int
+  currency      String      @default("RUB")
+  status        OrderStatus @default(CREATED)
+  paymentIntent String?
+  createdAt     DateTime    @default(now())
+  items         OrderItem[]
+
+  reviews Review[]
+}
+
+model OrderItem {
+  id        String  @id @default(cuid())
+  orderId   String
+  order     Order   @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  productId String
+  product   Product @relation(fields: [productId], references: [id])
+  name      String
+  priceRub  Int
+  quantity  Int
+}
+
+model Review {
+  id        String   @id @default(cuid())
+  orderId   String
+  order     Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
+
+  sellerId  String
+  seller    User     @relation("reviewsReceived", fields: [sellerId], references: [id], onDelete: Cascade)
+
+  buyerId   String
+  buyer     User     @relation("reviewsWritten", fields: [buyerId], references: [id], onDelete: Cascade)
+
+  rating    Int
+  text      String?
+  createdAt DateTime @default(now())
+
+  @@unique([orderId])
+  @@index([sellerId, createdAt])
+  @@index([buyerId, createdAt])
+}
+
+model ConversationRead {
+  id             String   @id @default(cuid())
+  conversationId String
+  conversation   Conversation @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+  userId         String
+  user           User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  lastMessageId  String
+  updatedAt      DateTime @updatedAt
+
+  @@unique([conversationId, userId])
+  @@index([userId, updatedAt])
+}
+
+model Report {
+  id           String           @id @default(cuid())
+  reporterId   String
+  reporter     User             @relation("reportsReporter", fields: [reporterId], references: [id], onDelete: Cascade)
+  targetType   ReportTargetType
+  reason       String
+  status       ReportStatus     @default(OPEN)
+  createdAt    DateTime         @default(now())
+
+  productId      String?
+  conversationId String?
+  messageId      String?
+  targetUserId   String?
+}
+
+enum OrderStatus {
+  PENDING
+  CREATED
+  CONFIRMED
+  PAID
+  SHIPPED
+  DELIVERED
+  CANCELLED
+}

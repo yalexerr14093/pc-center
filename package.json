@@ -1,0 +1,28 @@
+{
+  "name": "pc-center",
+  "private": true,
+  "workspaces": [
+    "client",
+    "server"
+  ],
+  "scripts": {
+    "dev": "npm-run-all -p dev:server dev:client",
+    "dev:client": "npm --workspace client run dev",
+    "dev:server": "npm --workspace server run dev",
+    "build": "npm-run-all build:server build:client",
+    "build:client": "npm --workspace client run build",
+    "build:server": "npm --workspace server run build",
+    "start": "npm-run-all -p start:server preview:client",
+    "start:server": "npm --workspace server run start",
+    "preview:client": "npm --workspace client run preview",
+    "db:push": "npm --workspace server exec -- prisma db push",
+    "db:generate": "npm --workspace server exec -- prisma generate",
+    "db:seed": "npm --workspace server run db:seed",
+    "db:seed:reset": "npm --workspace server run db:seed:reset",
+    "setup": "npm run db:push && npm run db:generate && npm run db:seed"
+  },
+  "devDependencies": {
+    "npm-run-all": "^4.1.5"
+  }
+}
+

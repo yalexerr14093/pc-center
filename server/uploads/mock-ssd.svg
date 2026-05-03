@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="900" viewBox="0 0 1200 900">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#f1f5f9"/>
+      <stop offset="1" stop-color="#e2e8f0"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="900" fill="url(#bg)"/>
+  <rect x="200" y="280" width="800" height="340" rx="48" fill="#ffffff" stroke="#334155" stroke-width="10"/>
+  <rect x="270" y="360" width="520" height="180" rx="28" fill="#e2e8f0" stroke="#475569" stroke-width="8"/>
+  <rect x="820" y="360" width="110" height="180" rx="22" fill="#e2e8f0" stroke="#475569" stroke-width="8"/>
+  <text x="600" y="500" text-anchor="middle" font-family="ui-sans-serif,system-ui" font-size="92" font-weight="800" fill="#0f172a">SSD</text>
+  <text x="600" y="570" text-anchor="middle" font-family="ui-sans-serif,system-ui" font-size="32" fill="#334155">PC-Center mock</text>
+</svg>

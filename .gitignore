@@ -1,0 +1,18 @@
+node_modules
+dist
+.DS_Store
+.env
+.env.*
+!.env.example
+
+client/dist
+server/dist
+*.tsbuildinfo
+
+# пользовательские загрузки (оставляем моки и seed-ассеты)
+server/uploads/*
+!server/uploads/.gitkeep
+!server/uploads/mock-*
+!server/uploads/seed-*
+server/prisma/migrations
+
