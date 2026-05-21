@@ -119,7 +119,7 @@ export function MessagesPage() {
     <div className="grid gap-6">
       <div className="flex items-end justify-between gap-3">
         <div>
-          <h2 className="text-2xl font-semibold">Сообщения</h2>
+          <h2 className="page-title">Сообщения</h2>
           <div className="mt-1 text-sm text-slate-600">{myEmail ?? ""}</div>
         </div>
       </div>

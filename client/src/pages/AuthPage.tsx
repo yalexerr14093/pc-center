@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { api } from "../lib/api";
+import { api, apiBaseURL } from "../lib/api";
 import { useAuthStore } from "../stores/authStore";
 
 export function AuthPage() {
@@ -14,14 +14,23 @@ export function AuthPage() {
 
   async function submit() {
     setMsg(null);
+    const endpoint = mode === "login" ? "/auth/login" : "/auth/register";
     try {
-      const endpoint = mode === "login" ? "/auth/login" : "/auth/register";
       const payload = mode === "login" ? { email, password } : { email, password, name };
       const r = await api.post(endpoint, payload);
       setAuth(r.data.token, r.data.user.id, r.data.user.email, r.data.user.role ?? "USER");
       nav("/checkout");
     } catch (e: any) {
-      setMsg(e?.response?.data?.message ?? "Ошибка авторизации.");
+      const status = e?.response?.status;
+      const path = e?.config?.url ?? endpoint;
+      const tried = `${apiBaseURL}${path}`;
+      if (status === 404) {
+        setMsg(
+          `Сервер не найден (404). Запрос: ${tried}. Запустите API (npm run dev), проверьте порт 4000. В client/.env укажите VITE_API_URL=http://localhost:4000 без /api в конце — или удалите client/.env (в dev работает прокси Vite).`
+        );
+      } else {
+        setMsg(e?.response?.data?.message ?? `Ошибка авторизации${status ? ` (${status})` : ""}.`);
+      }
     }
   }
 
@@ -29,7 +38,7 @@ export function AuthPage() {
     <div className="mx-auto grid w-full max-w-lg gap-6">
       <section className="card p-6">
         <div className="flex items-center justify-between">
-          <h2 className="text-2xl font-semibold">{mode === "login" ? "Вход" : "Регистрация"}</h2>
+          <h2 className="page-title">{mode === "login" ? "Вход" : "Регистрация"}</h2>
           <button
             className="btn-secondary"
             onClick={() => setMode((m) => (m === "login" ? "register" : "login"))}

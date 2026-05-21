@@ -77,7 +77,7 @@ export function AdminAnalyticsPage() {
     <div className="grid gap-8">
       <div className="flex flex-wrap items-end justify-between gap-3">
         <div>
-          <h2 className="text-2xl font-semibold text-violet-950">Аналитика</h2>
+          <h2 className="page-title text-violet-950">Аналитика</h2>
           <p className="mt-1 text-sm text-slate-600">Сводка по пользователям и заказам за последние 30 дней.</p>
         </div>
         <div className="flex gap-2 text-sm">
@@ -93,19 +93,19 @@ export function AdminAnalyticsPage() {
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
         <div className={chartWrap}>
           <div className="text-xs font-medium uppercase tracking-wide text-slate-500">Пользователей всего</div>
-          <div className="mt-1 text-3xl font-semibold text-slate-900">{summary.totalUsers}</div>
+          <div className="stat-value mt-1 text-slate-900">{summary.totalUsers}</div>
         </div>
         <div className={chartWrap}>
           <div className="text-xs font-medium uppercase tracking-wide text-slate-500">Заказов всего</div>
-          <div className="mt-1 text-3xl font-semibold text-slate-900">{summary.totalOrders}</div>
+          <div className="stat-value mt-1 text-slate-900">{summary.totalOrders}</div>
         </div>
         <div className={chartWrap}>
           <div className="text-xs font-medium uppercase tracking-wide text-slate-500">Покупателей (уник.)</div>
-          <div className="mt-1 text-3xl font-semibold text-slate-900">{summary.distinctBuyers}</div>
+          <div className="stat-value mt-1 text-slate-900">{summary.distinctBuyers}</div>
         </div>
         <div className={chartWrap}>
           <div className="text-xs font-medium uppercase tracking-wide text-slate-500">Оборот за 30 дней</div>
-          <div className="mt-1 text-2xl font-semibold text-slate-900">
+          <div className="stat-value mt-1 text-slate-900">
             {formatRub(summary.last30Days.revenueRub)}
           </div>
           <div className="mt-1 text-xs text-slate-600">по суммам заказов</div>

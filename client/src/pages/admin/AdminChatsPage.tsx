@@ -66,7 +66,7 @@ export function AdminChatsPage() {
     <div className="grid gap-6">
       <div className="flex flex-wrap items-end justify-between gap-3">
         <div>
-          <h2 className="text-2xl font-semibold text-violet-950">Все чаты</h2>
+          <h2 className="page-title text-violet-950">Все чаты</h2>
           <p className="mt-1 text-sm text-slate-600">Просмотр переписок покупатель — продавец по объявлению.</p>
         </div>
         <Link className="btn-secondary" to="/admin/analytics">

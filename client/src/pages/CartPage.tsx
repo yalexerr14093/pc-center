@@ -28,7 +28,7 @@ export function CartPage() {
   if (!token) {
     return (
       <div className="card p-6">
-        <h2 className="text-2xl font-semibold">Корзина</h2>
+        <h2 className="page-title">Корзина</h2>
         <div className="mt-2 text-slate-600">
           Нужно войти в аккаунт, чтобы посмотреть корзину.
         </div>
@@ -46,12 +46,12 @@ export function CartPage() {
 
   return (
     <div className="grid gap-6">
-      <div className="flex items-end justify-between">
-        <div>
-          <h2 className="text-2xl font-semibold">Корзина</h2>
+      <div className="flex min-w-0 flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+        <div className="min-w-0">
+          <h2 className="page-title">Корзина</h2>
           <div className="mt-1 text-sm text-slate-600">Управляй количеством и смотри итог.</div>
         </div>
-        <Link to="/catalog" className="btn-secondary">
+        <Link to="/catalog" className="btn-secondary shrink-0 self-start sm:self-auto">
           Добавить ещё
         </Link>
       </div>
@@ -108,11 +108,11 @@ export function CartPage() {
             </div>
           ))}
 
-          <div className="card p-5 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+          <div className="card flex min-w-0 flex-col gap-3 p-4 sm:flex-row sm:items-center sm:justify-between sm:p-5">
             <div className="text-slate-600">Итого</div>
-            <div className="text-2xl font-semibold">{formatRub(total)}</div>
+            <div className="stat-value min-w-0 sm:text-right">{formatRub(total)}</div>
             <button
-              className="btn-primary"
+              className="btn-primary w-full shrink-0 sm:w-auto"
               onClick={() => nav("/checkout")}
               disabled={items.length === 0}
             >

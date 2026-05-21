@@ -30,7 +30,7 @@ export function MyListingsPage() {
     <div className="grid gap-6">
       <div className="flex flex-wrap items-end justify-between gap-3">
         <div>
-          <h2 className="text-2xl font-semibold">Мои объявления</h2>
+          <h2 className="page-title">Мои объявления</h2>
           <div className="mt-1 text-sm text-slate-600">
             Здесь можно скрывать, показывать и удалять свои лоты.
           </div>

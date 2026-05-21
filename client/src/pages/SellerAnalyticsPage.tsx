@@ -90,14 +90,14 @@ export function SellerAnalyticsPage() {
 
   return (
     <div className="grid gap-8">
-      <div className="flex flex-wrap items-end justify-between gap-3">
-        <div>
-          <h2 className="text-2xl font-semibold">Аналитика продавца</h2>
+      <div className="flex min-w-0 flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-end sm:justify-between">
+        <div className="min-w-0">
+          <h2 className="page-title">Аналитика продавца</h2>
           <p className="mt-1 text-sm text-slate-600">
             Просмотры карточек, продажи и обращения — в духе кабинетов крупных маркетплейсов (данные учебного стенда).
           </p>
         </div>
-        <div className="flex flex-wrap gap-2">
+        <div className="flex min-w-0 flex-wrap gap-2">
           <Link className="btn-secondary" to="/my">
             Мои объявления
           </Link>
@@ -110,34 +110,34 @@ export function SellerAnalyticsPage() {
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6">
         <div className="card p-4">
           <div className="text-xs font-medium uppercase tracking-wide text-slate-500">Лотов всего</div>
-          <div className="mt-1 text-2xl font-semibold">{summary.listings}</div>
+          <div className="mt-1 stat-value">{summary.listings}</div>
         </div>
         <div className="card p-4">
           <div className="text-xs font-medium uppercase tracking-wide text-slate-500">Активных</div>
-          <div className="mt-1 text-2xl font-semibold">{summary.activeListings}</div>
+          <div className="mt-1 stat-value">{summary.activeListings}</div>
         </div>
         <div className="card p-4">
           <div className="text-xs font-medium uppercase tracking-wide text-slate-500">Просмотров</div>
-          <div className="mt-1 text-2xl font-semibold">{summary.totalViews}</div>
+          <div className="mt-1 stat-value">{summary.totalViews}</div>
         </div>
         <div className="card p-4">
           <div className="text-xs font-medium uppercase tracking-wide text-slate-500">Продано шт.</div>
-          <div className="mt-1 text-2xl font-semibold">{summary.soldUnits}</div>
+          <div className="mt-1 stat-value">{summary.soldUnits}</div>
         </div>
         <div className="card p-4">
           <div className="text-xs font-medium uppercase tracking-wide text-slate-500">Диалогов</div>
-          <div className="mt-1 text-2xl font-semibold">{summary.conversations}</div>
+          <div className="mt-1 stat-value">{summary.conversations}</div>
         </div>
         <div className="card p-4">
           <div className="text-xs font-medium uppercase tracking-wide text-slate-500">Выручка</div>
-          <div className="mt-1 text-2xl font-semibold">{formatRub(summary.revenueRub)}</div>
+          <div className="mt-1 stat-value">{formatRub(summary.revenueRub)}</div>
           <div className="mt-1 text-xs text-slate-500">По заказам, не отменённым</div>
         </div>
       </div>
 
       <div className="card p-4">
         <div className="text-sm font-semibold">Конверсия «просмотр → продажа» (оценка)</div>
-        <div className="mt-2 text-3xl font-semibold text-emerald-800">{avgConv}%</div>
+        <div className="stat-value mt-2 text-emerald-800">{avgConv}%</div>
         <p className="mt-2 text-sm text-slate-600">
           Отношение проданных единиц к сумме просмотров по всем лотам. На демонстрационном стенде просмотр считается при
           открытии карточки товара.

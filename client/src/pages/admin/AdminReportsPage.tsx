@@ -36,7 +36,7 @@ export function AdminReportsPage() {
     <div className="grid gap-6">
       <div className="flex flex-wrap items-end justify-between gap-3">
         <div>
-          <h2 className="text-2xl font-semibold text-violet-950">Жалобы</h2>
+          <h2 className="page-title text-violet-950">Жалобы</h2>
           <p className="mt-1 text-sm text-slate-600">Модерация контента и пользователей.</p>
         </div>
         <Link className="btn-secondary" to="/admin/analytics">

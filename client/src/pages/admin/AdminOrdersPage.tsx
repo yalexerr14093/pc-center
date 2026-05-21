@@ -108,7 +108,7 @@ export function AdminOrdersPage() {
     <div className="grid gap-6">
       <div className="flex flex-wrap items-end justify-between gap-3">
         <div>
-          <h2 className="text-2xl font-semibold text-violet-950">Все заказы</h2>
+          <h2 className="page-title text-violet-950">Все заказы</h2>
           <p className="mt-1 text-sm text-slate-600">Список заказов всех пользователей.</p>
         </div>
         <Link className="btn-secondary" to="/admin/analytics">

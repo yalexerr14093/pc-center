@@ -104,7 +104,7 @@ export function ProductPage() {
         </div>
 
         <div className="card p-6">
-          <h2 className="text-2xl font-semibold">{product.name}</h2>
+          <h2 className="page-title break-words">{product.name}</h2>
           <div className="mt-2 text-slate-600">{product.description}</div>
 
           <div className="mt-4 flex flex-wrap items-center gap-2 text-sm text-slate-600">

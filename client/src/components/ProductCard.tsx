@@ -29,17 +29,17 @@ export function ProductCard({ product }: { product: Product }) {
         <div className="absolute left-3 top-3 badge">{categoryLabel[product.category]}</div>
       </div>
 
-      <div className="p-4">
-        <div className="truncate text-base font-semibold">{product.name}</div>
-        <div className="mt-2 text-sm text-slate-600">
-          <span className="block overflow-hidden text-ellipsis whitespace-nowrap">
-            {product.description}
-          </span>
+      <div className="min-w-0 p-3 sm:p-4">
+        <div className="line-clamp-2 text-sm font-semibold leading-snug sm:text-base">{product.name}</div>
+        <div className="mt-2 text-xs text-slate-600 sm:text-sm">
+          <span className="line-clamp-2 block leading-snug">{product.description}</span>
         </div>
 
-        <div className="mt-4 flex items-center justify-between">
-          <div className="text-lg font-semibold">{formatRub(product.priceRub)}</div>
-          <span className="text-xs text-slate-600">{product.city ? product.city : `в наличии: ${product.stock}`}</span>
+        <div className="mt-3 flex min-w-0 items-start justify-between gap-2 sm:mt-4">
+          <div className="min-w-0 shrink text-base font-semibold sm:text-lg">{formatRub(product.priceRub)}</div>
+          <span className="max-w-[45%] shrink-0 break-words text-right text-[11px] leading-snug text-slate-600 sm:text-xs">
+            {product.city ? product.city : `в наличии: ${product.stock}`}
+          </span>
         </div>
       </div>
     </Link>

@@ -1,5 +1,5 @@
 import { io, type Socket } from "socket.io-client";
-import { apiOrigin } from "./api";
+import { socketOrigin } from "./api";
 import { useAuthStore } from "../stores/authStore";
 
 let socket: Socket | null = null;
@@ -7,7 +7,7 @@ let socket: Socket | null = null;
 export function getSocket(): Socket {
   if (socket) return socket;
 
-  socket = io(apiOrigin, {
+  socket = io(socketOrigin(), {
     transports: ["websocket"],
     autoConnect: false,
     auth: {

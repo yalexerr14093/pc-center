@@ -62,7 +62,7 @@ export function OrdersPage() {
   return (
     <div className="grid gap-6">
       <div>
-        <h2 className="text-2xl font-semibold">Мои заказы</h2>
+        <h2 className="page-title">Мои заказы</h2>
         <p className="mt-1 text-sm text-slate-600">Статусы заказов и история покупок.</p>
       </div>
 

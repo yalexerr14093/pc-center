@@ -82,7 +82,7 @@ export function CheckoutPage() {
 
       <div className="grid gap-6 lg:grid-cols-2">
         <section className="card p-6">
-          <h2 className="text-2xl font-semibold">Оформление заказа</h2>
+          <h2 className="page-title">Оформление заказа</h2>
           <div className="mt-2 text-sm text-slate-600">
             Укажите контактные данные и адрес доставки. Наличие проверяется при оформлении, а количество списывается сразу,
             чтобы избежать продажи сверх остатка.
@@ -154,7 +154,7 @@ export function CheckoutPage() {
             ))}
             <div className="flex items-center justify-between pt-2">
               <div className="text-slate-600">Итого</div>
-              <div className="text-2xl font-semibold">{formatRub(totalRub)}</div>
+              <div className="stat-value">{formatRub(totalRub)}</div>
             </div>
           </div>
 

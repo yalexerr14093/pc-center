@@ -84,7 +84,7 @@ export function SellPage() {
     <div className="grid gap-6">
       <div className="flex items-end justify-between gap-3">
         <div>
-          <h2 className="text-2xl font-semibold">Разместить объявление</h2>
+          <h2 className="page-title">Разместить объявление</h2>
           <div className="mt-1 text-sm text-slate-600">
             Добавьте фото, цену и характеристики — они будут показаны на странице товара.
           </div>

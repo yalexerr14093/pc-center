@@ -253,7 +253,7 @@ export function CatalogPage() {
     <div className="grid gap-6">
       <div className="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
         <div>
-          <h2 className="text-2xl font-semibold">Каталог</h2>
+          <h2 className="page-title">Каталог</h2>
           <div className="mt-1 text-sm text-slate-600">
             Поиск с подсказками и сохранённые фильтры; по характеристикам можно сузить выдачу после выбора категории.
           </div>

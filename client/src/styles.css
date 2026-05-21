@@ -6,35 +6,50 @@
   :root {
     color-scheme: light;
   }
+  html {
+    /* Плавный масштаб текста от узкого к широкому экрану */
+    font-size: clamp(15px, 0.22rem + 0.85vw, 17px);
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+  }
   * {
     -webkit-tap-highlight-color: transparent;
   }
   body {
-    @apply bg-slate-50 text-slate-900;
+    @apply min-w-0 overflow-x-hidden bg-slate-50 text-slate-900 antialiased;
+  }
+  #root {
+    @apply min-w-0;
   }
 }
 
 @layer components {
   .container-app {
-    @apply mx-auto w-full max-w-6xl px-4;
+    @apply mx-auto w-full max-w-6xl px-3 sm:px-5 md:px-6 lg:px-8;
   }
   .btn {
-    @apply inline-flex items-center justify-center rounded-xl px-4 py-2 font-medium transition;
+    @apply inline-flex min-h-[2.75rem] min-w-0 items-center justify-center rounded-xl px-4 py-2 text-[0.9375rem] font-medium transition sm:min-h-0;
   }
   .btn-primary {
-    @apply btn bg-emerald-600 text-white hover:bg-emerald-700;
+    @apply btn bg-emerald-600 text-white hover:bg-emerald-700 active:bg-emerald-800;
   }
   .btn-secondary {
-    @apply btn bg-white border border-slate-200 text-slate-900 hover:bg-slate-50;
+    @apply btn border border-slate-200 bg-white text-slate-900 hover:bg-slate-50 active:bg-slate-100;
   }
   .input {
-    @apply w-full rounded-xl bg-white border border-slate-200 px-3 py-2 outline-none focus:border-emerald-500 focus:ring-4 focus:ring-emerald-100;
+    @apply min-h-[2.75rem] w-full min-w-0 rounded-xl border border-slate-200 bg-white px-3 py-2 text-[0.9375rem] outline-none focus:border-emerald-500 focus:ring-4 focus:ring-emerald-100 sm:min-h-0;
   }
   .card {
-    @apply rounded-2xl overflow-hidden border border-slate-200 bg-white shadow-sm transition hover:shadow-md;
+    @apply overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm transition hover:shadow-md;
   }
   .badge {
-    @apply inline-flex items-center rounded-full border border-slate-200 bg-slate-100 px-2 py-1 text-xs text-slate-700;
+    @apply inline-flex min-h-[1.375rem] min-w-0 max-w-full items-center rounded-full border border-slate-200 bg-slate-100 px-2 py-0.5 text-xs leading-tight text-slate-700;
+  }
+  /* Заголовки страниц: плавный размер на узких экранах */
+  .page-title {
+    @apply font-semibold leading-tight tracking-tight text-[clamp(1.2rem,0.92rem+1.1vw,1.625rem)];
+  }
+  .stat-value {
+    @apply font-semibold tabular-nums text-[clamp(1.1rem,0.95rem+1vw,1.5rem)];
   }
 }
-

@@ -37,7 +37,7 @@ export function SellerPage() {
       <section className="card p-6">
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
-            <h2 className="text-2xl font-semibold">{name}</h2>
+            <h2 className="page-title break-words">{name}</h2>
             <div className="mt-1 text-sm text-slate-600">
               На площадке с {new Date(data.user.createdAt).toLocaleDateString("ru-RU")}
             </div>

@@ -16,3 +16,6 @@ server/uploads/*
 !server/uploads/seed-*
 server/prisma/migrations
 
+ctrlC.py
+project_code.txt
+

@@ -4,100 +4,110 @@
 
 Это **демонстрационный (учебно‑портфельный) проект**: сценарии, экраны и формулировки сознательно сделаны **как у настоящего коммерческого маркетплейса**, чтобы показать полноценный продуктовый UX и типовую архитектуру. При этом проект **не является реальным бизнес‑решением**: нет настоящей торговли, юридических обязательств, доставки и списания денег у клиентов; платёжный шаг при необходимости опирается на **Stripe в тестовом режиме** или имитацию потока без боевых реквизитов.
 
-Стек:
+Стек: React (Vite) + Express + PostgreSQL + Prisma + JWT.
 
-- **Frontend**: React (Vite) + Tailwind CSS + React Router
-- **Backend API**: Node.js + Express
-- **DB**: PostgreSQL + Prisma ORM
-- **Auth**: JWT (access token)
-- **Платежи**: Stripe PaymentIntent (только test mode / без реальных списаний)
-- **Images**: ссылки на Cloudinary (публичные URL для примера)
+---
 
-## Быстрый старт
+## Перенос на другой ПК (коротко)
 
-### 1) Требования
+**Нужно:** Node.js 18+, PostgreSQL 14+.
 
-- Node.js 18+ (рекомендуется 20+)
-- PostgreSQL 14+ (локально)
-
-### 2) Создание базы данных PostgreSQL (локально)
-
-Вариант A (через `psql`):
+### 1. База PostgreSQL
 
 ```sql
--- зайдите в psql под суперпользователем (например, postgres)
 CREATE DATABASE pc_center;
-
--- опционально: отдельный пользователь
-CREATE USER pc_center_user WITH PASSWORD 'pc_center_pass';
-GRANT ALL PRIVILEGES ON DATABASE pc_center TO pc_center_user;
 ```
 
-Затем задайте строку подключения в `server/.env`:
+### 2. Проект
 
 ```bash
-DATABASE_URL="postgresql://pc_center_user:pc_center_pass@localhost:5432/pc_center?schema=public"
-JWT_SECRET="change-me-change-me"
-STRIPE_SECRET_KEY="sk_test_..."
-CLIENT_ORIGIN="http://localhost:5173"
-```
-
-Вариант B (если вы используете встроенного пользователя `postgres`):
-
-```bash
-DATABASE_URL="postgresql://postgres:ВАШ_ПАРОЛЬ@localhost:5432/pc_center?schema=public"
-```
-
-### 3) Установка зависимостей
-
-```bash
+git clone <URL-репозитория>
+cd pc-center
 npm install
 ```
 
-### 4) Миграции и заполнение товарами
+`npm install` автоматически запускает **`prisma generate`**.
+
+### 3. Первичная настройка
 
 ```bash
-npm --workspace server run db:migrate
-npm --workspace server run db:seed
+npm run bootstrap
 ```
 
-### 5) Запуск (клиент + сервер)
+Создаст `server/.env` и `client/.env` из примеров, если их ещё нет.
+
+**Откройте `server/.env`** и замените `DATABASE_URL` на свою строку подключения (логин/пароль PostgreSQL на этом ПК).
+
+### 4. Схема БД и стартовые данные
+
+```bash
+npm run setup
+```
+
+(или одной командой после правки `.env`: `npm run first-run` — то же, что `bootstrap` + `setup`).
+
+### 5. Запуск
 
 ```bash
 npm run dev
 ```
 
-- Frontend: `http://localhost:5173`
-- Backend API: `http://localhost:4000`
+| Сервис | URL |
+|--------|-----|
+| Сайт | http://localhost:5173 |
+| API | http://localhost:4000 |
+| Проверка API | http://localhost:4000/health |
 
-## Основные возможности (по ТЗ)
+**Админ после seed:** `admin@pc-center.local` / `adminadmin`
 
-- **Главная**: баннер/промо + CTA в каталог
-- **Каталог**: карточки товаров (CPU, GPU, Motherboard, RAM, SSD)
-- **Фильтры**: категория + диапазон цены + поиск по названию
-- **Детали товара**: «В корзину»
-- **Корзина**: добавление/удаление, изменение количества, сумма
-- **Оформление**: имя, телефон, адрес; создание заказа в БД
-- **Оплата (тестовый сценарий)**: Stripe PaymentIntent в test mode (фронт получает `client_secret`)
-- **JWT‑авторизация**: регистрация/логин; создание заказа доступно только авторизованным
+---
+
+## Почему вход даёт 404
+
+Чаще всего API не запущен или неверный `VITE_API_URL`.
+
+- В **dev** можно **не создавать** `client/.env` — Vite проксирует `/api` на порт **4000**.
+- Если `client/.env` есть, пишите **`VITE_API_URL=http://localhost:4000`** (без `/api` в конце).
+- После смены `.env` перезапустите `npm run dev`.
+
+Проверка в PowerShell:
+
+```powershell
+curl http://localhost:4000/health
+```
+
+---
+
+## Ошибка «Prisma Client did not initialize yet»
+
+```bash
+npm run db:generate
+```
+
+Перед этим **остановите** запущенный API. Команда выполняется из **корня** репозитория.
+
+---
+
+## Команды
+
+| Команда | Назначение |
+|---------|------------|
+| `npm run bootstrap` | Создать `.env` из примеров |
+| `npm run setup` | Prisma + схема в БД + seed |
+| `npm run first-run` | bootstrap + setup |
+| `npm run dev` | API + фронт |
+| `npm run db:seed:reset` | Полный сброс каталога и заказов |
+
+---
 
 ## Переменные окружения
 
-Файл `server/.env`:
+**`server/.env`:** `DATABASE_URL`, `JWT_SECRET` (≥16 символов), опционально `PORT`, `CLIENT_ORIGIN`, `STRIPE_SECRET_KEY`.
 
-- **DATABASE_URL**: строка подключения PostgreSQL
-- **JWT_SECRET**: секрет для подписи JWT
-- **STRIPE_SECRET_KEY**: Stripe secret key (test)
-- **CLIENT_ORIGIN**: origin фронтенда для CORS
+**`client/.env`:** опционально `VITE_API_URL` (см. выше).
 
-Файл `client/.env` (не обязателен, есть дефолт):
-
-- **VITE_API_URL**: URL API (по умолчанию `http://localhost:4000`)
+---
 
 ## Тестовые карты Stripe
 
-Используйте тестовые данные Stripe:
-
-- Номер карты: `4242 4242 4242 4242`
-- Любая будущая дата, любой CVC
-
+- `4242 4242 4242 4242`, любая будущая дата и CVC.
